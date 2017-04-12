@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// writes to console, if debug is enabled.
 void write_debug(string message, bool debug)
 {
     if (debug)
@@ -15,6 +16,7 @@ void write_debug(string message, bool debug)
     }
 }
 
+// Converts a hexadecimal character into its binary bitset.
 bitset<4> hex_to_bits(char hex)
 {
     
@@ -79,15 +81,18 @@ void process_instruction(string instruction)
 
     bits = hex_to_bits(instruction[0]);
 
-    cout<<"OpCode - "<<bits<<"\n";
+    cout<<"OpCode - "<<bits<<" "<<instruction[0]<<"\n";
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     string instruction, path;
     ifstream program;
-    bool debug = 1;
-    
+    bool debug = 0;
+
+
+
+
     path = "program.txt";
 
     printf ("virtual CPU\n%s\n", "---------------");
