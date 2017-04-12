@@ -1,0 +1,12 @@
+1 - RXY - Load register R with the bit pattern in memory cell XY.
+2 - RXY - Load regiser R with the bit pattern XY.
+3 - RXY - Store the bit pattern in register R at memory cell XY.
+4 - 0RS - Move the bit pattern in register R to register S.
+5 - RST - Add (two's complement) the bit patterns in registers R and S. Put the result in register T.
+6 - RST - Add (flaoting point) the bit patterns in registers R and S. Put the results in regiser T.
+7 - RST - Or the bit patterns in Regiseters S and T. Put the result in register R.
+8 - RST - And the bit patterns in registers S and T. Put hte result in register R.
+9 - RST - Exclusive OR the bit patterns in registers S and T. Put th result in regiser R.
+A - R0X - Rotate the bit pattern in register R one bit o the right X times.
+B - RXY - Jump to the instruction at memory cell XY if the bit pattern in register R is equal to the bit pattern in register 0.
+C - 000 - Halt.
