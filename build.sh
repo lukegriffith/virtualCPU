@@ -1,0 +1,1 @@
+g++ cpu.cpp -o cpu
