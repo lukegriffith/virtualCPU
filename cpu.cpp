@@ -4,38 +4,11 @@
 #include <fstream>
 #include <iostream>
 #include <bitset>
+#include <array>
+#include "memory_register.h"
 
-using namespace std;
-
-// Memory register data structure to allow a static class to hold registers.
-class memory_register 
-{
-    public:
-
-        static bitset<8> getRegister(bitset<4> location1, bitset<4> location2) 
-        {
-
-            bitset<8> reg;
-
-            reg = bitset<8> (std::string(location1.to_string<char,std::string::traits_type,std::string::allocator_type>() + location2.to_string<char,std::string::traits_type,std::string::allocator_type>()));
-
-            long reglocation = reg.to_ulong();
-
-           // return memory_register::registers[reglocation];
-            return memory_register::registers[0];
-        }
-
-        static void initRegister()
-        {
-            for (int i; i <= 128; i = i + 1)
-            {
-                memory_register::registers[i] = bitset<8>();
-            }
-        }
-    private:
-
-        static bitset<8> registers[128];
-};
+// static property needs to be defined in cpp
+std::array<bitset<8>,128> memory_register::registers;
 
 // writes to console, if debug is enabled.
 void write_debug(string message, bool debug)
@@ -140,11 +113,15 @@ int main(int argc, char* argv[])
 
     bitset<8> reg = memory_register::getRegister(x, x);
 
+    cout<<"original reg "<<reg<<"\n";
+
     reg = bitset<8>(std::string("11111111"));
+
+    memory_register::setRegister(x, x, reg);
 
     bitset<8> reg1 = memory_register::getRegister(x, x);
 
-    cout<<"reg "<<reg<<"\n"<<"reg1 "<<reg1 ;
+    cout<<"reg "<<reg<<" reg1 "<<reg1 ;
 
     return 0;
 }
