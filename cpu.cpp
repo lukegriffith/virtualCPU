@@ -6,9 +6,12 @@
 #include <bitset>
 #include <array>
 #include "memory_register.h"
+#include "program_counter.h"
 
 // static property needs to be defined in cpp
 std::array<bitset<8>,128> memory_register::registers;
+std::array<string,128> program_counter::program;
+int program_counter::cursor;
 
 // writes to console, if debug is enabled.
 void write_debug(string message, bool debug)
@@ -91,24 +94,13 @@ void process_instruction(string instruction)
 
 int main(int argc, char* argv[])
 {
-    string instruction, path;
-    ifstream program;
+    string path;
     bool debug = 0;
     path = "program.txt";
     memory_register::initRegister();
+    program_counter::readProgram(path);
 
     printf ("virtual CPU\n%s\n", "---------------");
-
-    program.open(path);
-
-    // Iterate each line of the program.
-    while (getline(program, instruction))
-    { 
-        write_debug(instruction, debug);
-        process_instruction(instruction);
-    }
-
-
     bitset<4> x = hex_to_bits('F');
 
     bitset<8> reg = memory_register::getRegister(x, x);
@@ -122,6 +114,12 @@ int main(int argc, char* argv[])
     bitset<8> reg1 = memory_register::getRegister(x, x);
 
     cout<<"reg "<<reg<<" reg1 "<<reg1 ;
+
+    cout<<std::endl<<program_counter::getLine();
+
+    program_counter::goToLine(20);
+
+    cout<<std::endl<<program_counter::getLine();
 
     return 0;
 }

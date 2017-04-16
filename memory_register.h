@@ -8,8 +8,8 @@ class memory_register
 
         static bitset<8> getRegister(bitset<4> location1, bitset<4> location2) 
         {
-
             bitset<8> reg;
+
             long reglocation;
 
             reg = getloc(location1, location2);
