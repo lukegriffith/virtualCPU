@@ -41,17 +41,19 @@ class memory_register
     private:
         static bitset<8> getloc(bitset<4> loc1, bitset<4> loc2)
         {
-            // Use math opposed to sting operations. Convert loc1 to ulong - multiply by 8, convert loc2 to int
-            // and add to result of loc1. Convert to bitset<8>
-            return bitset<8> (std::string(loc1.to_string<char,std::string::traits_type,std::string::allocator_type>() + loc2.to_string<char,std::string::traits_type,std::string::allocator_type>()));
+            // previous implementation using string operations. 
+            // return bitset<8> (std::string(loc1.to_string<char,std::string::traits_type,std::string::allocator_type>() + loc2.to_string<char,std::string::traits_type,std::string::allocator_type>()));
 
-
+            // current implementation, using math. 
             long l1, l2, result;
 
             l1 = loc1.to_ulong();
             l2 = loc2.to_ulong(); 
 
             result = l1 * 8  + l2; 
+
+            return bitset<8>(result);
+
 
         }
 

@@ -38,7 +38,13 @@ class program_counter
 
         static string getLine()
         {
-            return program[cursor];
+            string line; 
+            if (program[cursor].empty())
+                line = "NOP";
+            else
+                line = program[cursor];
+
+            return line;
         }
 
         static void goToLine(int line)
