@@ -14,7 +14,7 @@ void write_debug(string message, bool debug)
 {
     if (debug)
     {
-        cout<<message<<"\n";
+        cout<<"[DEBUG]: "<<message<<"\n";
     }
 }
 
@@ -76,13 +76,3 @@ bitset<4> hex_to_bits(char hex)
 
     return bits;
 }
-
-void process_instruction(string instruction)
-{
-    bitset<4> bits;
-
-    bits = hex_to_bits(instruction[0]);
-
-    cout<<"OpCode - "<<bits<<" "<<instruction[0]<<"\n";
-}
-

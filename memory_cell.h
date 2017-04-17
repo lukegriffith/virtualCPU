@@ -50,7 +50,7 @@ class memory_cell
             l1 = loc1.to_ulong();
             l2 = loc2.to_ulong(); 
 
-            result = l1 * 8  + l2; 
+            result = l1 * 16  + l2; 
 
             return bitset<8>(result);
 

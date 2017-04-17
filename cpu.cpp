@@ -16,15 +16,39 @@ std::array<string,128> program_counter::program;
 std::array<bitset<8>,15> cpu_register::registers;
 int program_counter::cursor;
 
-void loadRegister(char R, char X, char Y) 
+// Opertation 1, loads CPU register R, from a memory cell XY.
+void loadRegisterFromMemory(char R, char X, char Y) 
 {
+    bitset<4> r = hex_to_bits(R);
     bitset<4> x = hex_to_bits(X);
     bitset<4> y = hex_to_bits(Y);
-    bitset<4> r = hex_to_bits(R);
     bitset<8> bitpattern;
 
     bitpattern = memory_cell::getCell(x, y);
     cpu_register::setRegister(r, bitpattern);
+
+}
+// Operation 2, loads register R with the bit pattern XY
+void loadRegisterFromPattern(char R, char X, char Y)
+{
+    bitset<4> r = hex_to_bits(R);
+    bitset<4> x = hex_to_bits(X);
+    bitset<4> y = hex_to_bits(Y);
+    bitset<8> bitpattern;
+
+    bitpattern = x.to_ulong() * 16 + y.to_ulong();
+    cpu_register::setRegister(r, bitpattern);
+}
+// Operation 3 - Store the bit pattern in register R at memory cell XY
+void moveRegisterToMemory(char R, char X, char Y)
+{
+    bitset<4> r = hex_to_bits(R);
+    bitset<4> x = hex_to_bits(X);
+    bitset<4> y = hex_to_bits(Y);
+    bitset<8> bitpattern;
+
+    bitpattern = cpu_register::getRegister(r);
+    memory_cell::setCell(x, y, bitpattern);
 
 }
 
@@ -35,9 +59,17 @@ void processOperation(string instruction)
 
    switch (instruction[0])
     {
-        case '0':
-           loadRegister(instruction[1], instruction[2], instruction[3]);
+        case '1':
+           loadRegisterFromMemory(instruction[1], instruction[2], instruction[3]);
            break;
+
+        case '2':
+           loadRegisterFromPattern(instruction[1], instruction[2], instruction[3]);
+           break;
+
+        case '3':
+            moveRegisterToMemory(instruction[1], instruction[2], instruction[3]);
+            break;
 
         default:
             cout<<"Unable to find operation"<<std::endl;
@@ -47,11 +79,7 @@ void processOperation(string instruction)
 
 void process_instruction(string instruction)
 {
-    bitset<4> bits;
 
-    bits = hex_to_bits(instruction[0]);
-
-    cout<<"OpCode - "<<bits<<" "<<instruction[0]<<"\n";
 }
 
 
@@ -97,22 +125,35 @@ int main(int argc, char* argv[])
 //    cout<<std::endl<<"Register "<<reg;
 //
 
+    bitset<4> cpu_reg;
     bitset<4> cell = hex_to_bits('1');
     bitset<8> reg = bitset<8>(std::string("11111101"));
 
     memory_cell::setCell(cell, cell, reg);
 
-    cout<<"Set memory cell 11(16), to FF(16) 11111101(2)"<<std::endl;
+    cout<<"Program has Set memory cell 11(16), to FF(16) 11111101(2)"<<std::endl;
 
-    string a = "hello";
+
+    cout<<"Instruction "<<program_counter::getLine()<<std::endl;
 
 
     processOperation( program_counter::getLine() );
 
     cout<<"First line has been processed, CPU register 1 should be set with content of memory cell 11"<<std::endl;
 
-    cout<<cpu_register::getRegister(cell);
+    cout<<cpu_register::getRegister(cell)<<std::endl;
 
+    program_counter::nextLine();
+
+
+    cout<<"Instruction "<<program_counter::getLine()<<std::endl;
+
+    cout<<"Will load CPU register 2, with the given bitpattern"<<std::endl;
+
+    processOperation( program_counter::getLine() );
+
+    cpu_reg = hex_to_bits('2');
+    cout<<"CPU Register 2 has value "<<cpu_register::getRegister(cpu_reg)<<std::endl;
 
     return 0;
 }
