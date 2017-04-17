@@ -10,3 +10,5 @@
 A - R0X - Rotate the bit pattern in register R one bit o the right X times.
 B - RXY - Jump to the instruction at memory cell XY if the bit pattern in register R is equal to the bit pattern in register 0.
 C - 000 - Halt.
+D - 0XY - Print from memory location XY
+E - 0R0 - Print from CPU location R
