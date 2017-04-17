@@ -5,12 +5,12 @@
             "name": "C++ Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/cpu",
+            "program": "${workspaceRoot}/a.out",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],
-            "externalConsole": true,
+            "externalConsole": false,
             "linux": {
                 "MIMode": "gdb",
                 "setupCommands": [

@@ -5,12 +5,14 @@
 #include <iostream>
 #include <bitset>
 #include <array>
-#include "memory_register.h"
+#include "memory_cell.h"
 #include "program_counter.h"
+#include "cpu_register.h"
 
 // static property needs to be defined in cpp
-std::array<bitset<8>,128> memory_register::registers;
+std::array<bitset<8>,128> memory_cell::cells;
 std::array<string,128> program_counter::program;
+std::array<bitset<8>,15> cpu_register::registers;
 int program_counter::cursor;
 
 // writes to console, if debug is enabled.
@@ -97,21 +99,21 @@ int main(int argc, char* argv[])
     string path;
     bool debug = 0;
     path = "program.txt";
-    memory_register::initRegister();
+    //memory_cell::initMemory();
     program_counter::readProgram(path);
 
     printf ("virtual CPU\n%s\n", "---------------");
     bitset<4> x = hex_to_bits('F');
 
-    bitset<8> reg = memory_register::getRegister(x, x);
+    bitset<8> reg = memory_cell::getCell(x, x);
 
     cout<<"original reg "<<reg<<"\n";
 
     reg = bitset<8>(std::string("11111111"));
 
-    memory_register::setRegister(x, x, reg);
+    memory_cell::setCell(x, x, reg);
 
-    bitset<8> reg1 = memory_register::getRegister(x, x);
+    bitset<8> reg1 = memory_cell::getCell(x, x);
 
     cout<<"reg "<<reg<<" reg1 "<<reg1 ;
 
@@ -120,6 +122,19 @@ int main(int argc, char* argv[])
     program_counter::goToLine(20);
 
     cout<<std::endl<<program_counter::getLine();
+
+    bitset<8> cpu_reg = cpu_register::getRegister(x);
+
+    cout<<std::endl<<"CPU Register "<<cpu_reg;
+
+    cpu_register::setRegister(x, reg);
+
+    cout<<std::endl<<"Set CPU Register.";
+
+    reg = cpu_register::getRegister(x);
+
+    cout<<std::endl<<"Register "<<reg;
+
 
     return 0;
 }

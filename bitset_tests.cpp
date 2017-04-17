@@ -17,7 +17,12 @@ int main (int argc, char* argv[]) {
 
     i4 = i; 
 
-    cout<<i<<" is "<<i4;
+    cout<<i<<" is "<<i4<<std::endl;
+
+
+    j = i4.to_ulong();
+
+    cout<<j<<" Converted back to int, from bitset.";
 
 
     return 0; 

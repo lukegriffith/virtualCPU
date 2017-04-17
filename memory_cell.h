@@ -1,12 +1,12 @@
 
 using namespace std;
 
-// Memory register data structure to allow a static class to hold registers.
-class memory_register 
+// Emulates the memory for the program 
+class memory_cell 
 {
     public:
 
-        static bitset<8> getRegister(bitset<4> location1, bitset<4> location2) 
+        static bitset<8> getCell(bitset<4> location1, bitset<4> location2) 
         {
             bitset<8> reg;
 
@@ -16,10 +16,10 @@ class memory_register
 
             reglocation = reg.to_ulong();
 
-            return memory_register::registers[reglocation];
+            return memory_cell::cells[reglocation];
         }
 
-        static void setRegister(bitset<4> location1, bitset<4> location2, bitset<8> value)
+        static void setCell(bitset<4> location1, bitset<4> location2, bitset<8> value)
         {
             bitset<8> reg;
             long reglocation;
@@ -27,14 +27,14 @@ class memory_register
             reg = getloc(location1, location2);
             reglocation = reg.to_ulong();
 
-            memory_register::registers[reglocation] = value;
+            memory_cell::cells[reglocation] = value;
         }
 
-        static void initRegister()
+        static void initMemory()
         {
             for (int i; i <= 128; i = i + 1)
             {
-                memory_register::registers[i] = bitset<8>();
+                memory_cell::cells[i] = bitset<8>();
             }
         }
 
@@ -57,5 +57,5 @@ class memory_register
 
         }
 
-        static std::array<bitset<8>,128> registers;
+        static std::array<bitset<8>,128> cells;
 };
